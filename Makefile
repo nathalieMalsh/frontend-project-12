@@ -9,7 +9,7 @@ publish: #отладка публикации проекта
 	npm publish --dry-run
 
 build: # сборка фронтенда в папку dist
-	cd frontend && npm run build
+	cd frontend && npm ci && npm run build
 
 start: # запуск сервера
 	npx start-server -s ./frontend/dist
