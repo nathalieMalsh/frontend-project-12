@@ -19,6 +19,7 @@
   "homepage": "https://github.com/nathalieMalsh/frontend-project-12#readme",
   "dependencies": {
     "@hexlet/chat-server": "^2.0.4",
+    "axios": "^1.11.0",
     "formik": "^2.4.6",
     "react-router-dom": "^7.7.1"
   }
