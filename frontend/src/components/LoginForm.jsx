@@ -1,11 +1,14 @@
-import React from 'react';
+import React from 'react'
 import axios from 'axios'
-import { Formik, Form, Field } from 'formik';
+import { useState } from 'react'
+import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
-import routes from '../routes';
+import routes from '../routes'
 
 const LoginForm = () => {
   const navigate = useNavigate()
+
+  const [authError, setAuthError] = useState(false)
   
   return (
     <Formik 
@@ -13,14 +16,17 @@ const LoginForm = () => {
       onSubmit={ async (values, { setSubmitting }) => {
         setSubmitting(true)
 
-        console.log(values); // { password: '', username: '' }
+        // console.log(values); // { password: '', username: '' }
+        
         try {
-          const responce = await axios.post(axios.post(routes.loginPath(), values))
+          const responce = await axios.post(routes.loginPath(), values)
           window.localStorage.setItem('userId', responce.data)
+          setAuthError(false)
           navigate('/')
         }
         catch (error) {
           console.log(error.message)
+          setAuthError(true)
         }
 
         setSubmitting(false);
@@ -34,6 +40,7 @@ const LoginForm = () => {
             <Field
               type="username"
               name="username"
+              autocomplete="username"
             />
           </div>
           <div>
@@ -41,8 +48,10 @@ const LoginForm = () => {
             <Field
               type="password"
               name="password"
+              autocomplete="current-password"
             />
           </div>
+          <div hidden={!authError}>Неверные имя пользователя или пароль</div>
           <button type="submit" disabled={isSubmitting}>Войти</button>
         </Form>
       )}
