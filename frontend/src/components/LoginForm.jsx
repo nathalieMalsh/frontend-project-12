@@ -45,7 +45,7 @@ const LoginForm = () => {
               required
               placeholder='Ваш ник'
               id='username'
-              className='form-control'
+              className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
             <label htmlFor="username">Ваш ник</label>
           </div>
@@ -58,12 +58,11 @@ const LoginForm = () => {
               required
               placeholder='Пароль'
               id="password"
-              className='form-control'
+              className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
             <label htmlFor="password">Пароль</label>
+            {authError && <div className='invalid-tooltip'>Неверные имя пользователя или пароль</div>}
           </div>
-
-          {authError && <Alert variant='danger'>Неверные имя пользователя или пароль</Alert>}
 
           <Button type='submit' variant='outline-primary' className='w-100 mb-3' disabled={isSubmitting}>
             Войти
