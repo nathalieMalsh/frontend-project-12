@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { Button, Alert } from 'react-bootstrap';
 import routes from '../routes'
 import { loginSuccess } from '../slices/authSlice'
 
@@ -33,26 +34,40 @@ const LoginForm = () => {
       }}
     >
       {({ isSubmitting }) => (
-        <Form>
-          <h1>Войти</h1>
-          <div>
-            <label htmlFor="username">Ваш ник</label>
+        <Form className='col-12 mt-3 mt-md-0'>
+          <h1 className='text-center mb-4'>Войти</h1>
+
+          <div className='form-floating mb-3'>
             <Field
               type="username"
               name="username"
               autocomplete="username"
+              required
+              placeholder='Ваш ник'
+              id='username'
+              className='form-control'
             />
+            <label htmlFor="username">Ваш ник</label>
           </div>
-          <div>
-            <label htmlFor="password">Пароль</label>
+
+          <div className='form-floating mb-4'>
             <Field
               type="password"
               name="password"
               autocomplete="current-password"
+              required
+              placeholder='Пароль'
+              id="password"
+              className='form-control'
             />
+            <label htmlFor="password">Пароль</label>
           </div>
-          <div hidden={!authError}>Неверные имя пользователя или пароль</div>
-          <button type="submit" disabled={isSubmitting}>Войти</button>
+
+          {authError && <Alert variant='danger'>Неверные имя пользователя или пароль</Alert>}
+
+          <Button type='submit' variant='outline-primary' className='w-100 mb-3' disabled={isSubmitting}>
+            Войти
+          </Button>
         </Form>
       )}
     </Formik>
