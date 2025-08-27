@@ -1,11 +1,11 @@
-import React from 'react';
-import { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
 
 const MainPage = () => {
   const navigate = useNavigate()
 
-  const token = window.localStorage.getItem('userId')
+  const token = useSelector((state) => state.auth.token)
 
   useEffect(() => {
     if (!token) {

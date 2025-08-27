@@ -8,7 +8,7 @@ const LoginPage = () => (
       <LoginForm />
     </div>
     <div /* второй div */>
-      <div >
+      <div>
         <span>Нет аккаунта?</span>
         <a href="">Регистрация</a>
       </div>

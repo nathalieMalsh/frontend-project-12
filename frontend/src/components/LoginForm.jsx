@@ -1,12 +1,14 @@
-import React from 'react'
+import React, { useState } from 'react'
 import axios from 'axios'
-import { useState } from 'react'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import routes from '../routes'
+import { loginSuccess } from '../slices/authSlice'
 
 const LoginForm = () => {
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const [authError, setAuthError] = useState(false)
   
@@ -14,13 +16,11 @@ const LoginForm = () => {
     <Formik 
       initialValues={{ username: "", password: "" }}
       onSubmit={ async (values, { setSubmitting }) => {
-        setSubmitting(true)
-
-        // console.log(values); // { password: '', username: '' }
-        
+        setSubmitting(true) 
         try {
           const responce = await axios.post(routes.loginPath(), values)
-          window.localStorage.setItem('userId', responce.data)
+          const token = responce.data
+          dispatch(loginSuccess({ token }))
           setAuthError(false)
           navigate('/')
         }
