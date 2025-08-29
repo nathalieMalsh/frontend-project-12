@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Button, Alert } from 'react-bootstrap';
+import { Button } from 'react-bootstrap'
 import routes from '../routes'
 import { loginSuccess } from '../slices/authSlice'
 
@@ -20,8 +20,8 @@ const LoginForm = () => {
         setSubmitting(true) 
         try {
           const responce = await axios.post(routes.loginPath(), values)
-          const token = responce.data
-          dispatch(loginSuccess({ token }))
+          const userData = responce.data
+          dispatch(loginSuccess(userData))
           setAuthError(false)
           navigate('/')
         }
