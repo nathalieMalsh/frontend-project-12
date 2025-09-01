@@ -9,7 +9,7 @@ const LoginPage = () => (
         <Card className='shadow-sm'>
           <Card.Body className='row p-5'/* div 1 */>
             <Col xs={12} md={6} className="d-flex align-items-center justify-content-center mb-3 mb-md-0">
-              <img src="https://i.pinimg.com/736x/1d/53/95/1d5395564301e8b738bd6b483542e023.jpg" alt="Войти" className="rounded-circle img-fluid" />
+              <img src="https://frontend-chat-ru.hexlet.app/assets/avatar-DIE1AEpS.jpg" alt="Войти" className="rounded-circle img-fluid" />
             </Col>
             <Col xs={12} md={6}>
               <LoginForm />

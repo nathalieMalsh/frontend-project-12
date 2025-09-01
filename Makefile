@@ -8,7 +8,7 @@ link: # генерация ссылки для проекта
 publish: #отладка публикации проекта
 	npm publish --dry-run
 
-build: # сборка фронтенда в папку dist
+build: # сборка проекта в папку ./frontend/dist
 	npm ci && cd frontend && npm ci && npm run build
 
 start: # запуск сервера
