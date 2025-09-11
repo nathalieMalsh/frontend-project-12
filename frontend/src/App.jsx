@@ -7,6 +7,8 @@ import LoginPage from './pages/LoginPage.jsx';
 import NotFoundPage from './pages/NotFoundPage.jsx';
 
 const App = () => {
+  console.log('отрисовка App')
+  
   return (
     <BrowserRouter>
       <Routes>

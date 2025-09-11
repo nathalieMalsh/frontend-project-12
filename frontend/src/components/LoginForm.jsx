@@ -8,6 +8,8 @@ import routes from '../routes'
 import { loginSuccess } from '../slices/authSlice'
 
 const LoginForm = () => {
+  console.log('отрисовка LoginForm')
+
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
@@ -41,7 +43,7 @@ const LoginForm = () => {
             <Field
               type="username"
               name="username"
-              autocomplete="username"
+              autoComplete="username"
               required
               placeholder='Ваш ник'
               id='username'
@@ -54,7 +56,7 @@ const LoginForm = () => {
             <Field
               type="password"
               name="password"
-              autocomplete="current-password"
+              autoComplete="current-password"
               required
               placeholder='Пароль'
               id="password"

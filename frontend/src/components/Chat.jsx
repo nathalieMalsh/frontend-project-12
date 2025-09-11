@@ -1,9 +1,76 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Col, Button,Form } from 'react-bootstrap'
+import { addMessage } from '../slices/messagesSlice'
+import routes from '../routes'
+import socket from '../socket'
 
 const Chat = () => {
+  console.log('отрисовка Chat')
+  
+  const dispatch = useDispatch()
+  
   const channels = useSelector((state) => state.channels.channels)
+  
+  const userId = useSelector((state) => state.auth.userId)
+  const token = userId?.token
+  const username = userId?.username
+  
+  const allMessages = useSelector((state) => state.chat.messages || [])
+
+  // console.log('Chat.jsx channels', channels)
+  // console.log('Chat.jsx userId: username, token', username, token)
+  // console.log('Chat.jsx allMessages', allMessages)
+
+  const [currentChannelId, setCurrentChannelId] = useState('1')
+  const [currentChannelChat, setCurrentChannelChat] = useState([])
+  const [inputValue, setInputValue] = useState('')
+
+  useEffect(() => {
+    socket.on('connect', () => console.log('Подключение к серверу'))
+    socket.on('disconnect', () => console.log('Подключение потеряно'))
+
+    return () => {
+      socket.off('connect')
+      socket.off('disconnect')
+    }
+  }, [])
+
+  useEffect(() => {
+    socket.on('newMessage', (message) => {
+      dispatch(addMessage(message))
+    })
+
+    return () => {
+      socket.off('newMessage')
+    }
+  }, [dispatch])
+  
+  useEffect(() => {
+    setCurrentChannelChat(allMessages.filter((message) => message.channelId === currentChannelId))
+  }, [allMessages, currentChannelId])
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    
+    if (!inputValue.trim()) return
+
+    try {
+      const newMessage = { body: inputValue, channelId: currentChannelId, username }
+      axios.post(routes.addMessagePath(), newMessage, { headers: { Authorization: `Bearer ${token}`, } })
+      setInputValue('')
+    }
+    catch (error) {
+      console.log('Ошибка при отправке сообщения:', error.message)
+    }
+  }
+  
+  const handleChange = (e) => {
+    setInputValue(e.target.value)
+  }
+  
   return (
     <>
       {/* Список каналов */}
@@ -22,9 +89,10 @@ const Chat = () => {
           {channels.map((channel) => (
             <li key={channel.id} className='nav-item w-100'>
               <Button
-                variant='light'
+                variant={`${channel.id === currentChannelId ? 'secondary' : 'white'}`}
                 type='button'
-                className='w-100 rounded-0 text-start btn btn-secondary'
+                className='w-100 rounded-0 text-start'
+                onClick={() => setCurrentChannelId(channel.id)}
               >
                 <span className='me-1'>#</span>
                 {channel.name}
@@ -39,25 +107,33 @@ const Chat = () => {
         <div className='d-flex flex-column h-100'>
           <div className='bg-light mb-4 p-3 shadow-sm small'>
             <p className='m-0'>
-              <b># general</b>
+              <b># {channels.find(c => c.id === currentChannelId)?.name}</b>
             </p>
-            <span className='text-muted'>0 сообщений</span>
+            <span className='text-muted'>{currentChannelChat.length} сообщений</span>
           </div>
 
           <div id='messages-box' className='chat-messages overflow-auto px-5'>
-            {/* Тут позже будут сообщения */}
+            {currentChannelChat.map(({ id, body, username }) => (
+              <div key={id} className='text-break mb-2'>
+                <b>{username}</b>: {body}
+             </div>
+            ))
+            }
           </div>
 
           <div className='mt-auto px-5 py-3'>
-            <Form className='py-1 border rounded-2'>
+            <Form className='py-1 border rounded-2' onSubmit={handleSubmit}>
               <div className='input-group has-validation'>
                 <Form.Control
                   name='body'
+                  type='text'
                   aria-label='Новое сообщение'
                   placeholder='Введите сообщение...'
                   className='border-0 p-0 ps-2 form-control'
+                  value={inputValue}
+                  onChange={handleChange}
                 />
-                <Button type='submit' variant='light' className='btn btn-group-vertical' disabled>
+                <Button type='submit' variant='light' className={`btn btn-group-vertical ${inputValue.trim() ? '' : 'disabled'}`}>
                   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='20' height='20' fill='currentColor' className='bi bi-arrow-right-square'>
                     <path fillRule='evenodd' d='M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z'/>
                   </svg>

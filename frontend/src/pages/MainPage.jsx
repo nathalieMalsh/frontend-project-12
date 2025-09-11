@@ -2,19 +2,20 @@ import React, { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row } from 'react-bootstrap'
 import routes from '../routes'
 import { addChannels } from '../slices/channelsSlice.jsx'
 import Chat from '../components/Chat.jsx'
 
 const MainPage = () => {
+  console.log('отрисовка MainPage')
   const navigate = useNavigate()
   const dispatch = useDispatch()
 
-  const userId = useSelector((state) => state.auth.userId)
+  const { userId } = useSelector((state) => state.auth)
   const token = userId?.token
 
-  useEffect( async () => {
+  useEffect(() => {
     if (!userId) {
       navigate('/login')
     }
