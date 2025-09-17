@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { Col, Button,Form } from 'react-bootstrap'
+import { Col, Button, Form, Dropdown, ButtonGroup } from 'react-bootstrap'
 import { addMessage } from '../slices/messagesSlice'
 import routes from '../routes'
 import socket from '../socket'
@@ -77,6 +77,57 @@ const Chat = () => {
     }
   }
 
+  const renderChannelsButtons = (channels) => {
+    const channelsButtons = channels.map((channel) => {
+      if (!channel.removable) {
+        return (
+          <li key={channel.id} className='nav-item w-100'>
+            <Button
+              variant={`${channel.id === currentChannelId ? 'secondary' : 'white'}`}
+              type='button'
+              className='w-100 rounded-0 text-start'
+              id='unremovable-channel-button'
+              onClick={() => setCurrentChannelId(channel.id)}
+            >
+              <span className='me-1'>#</span>
+              {channel.name}
+            </Button>
+          </li>
+        )
+      }
+      return (
+        <li key={channel.id} className='nav-item w-100'>
+          <Dropdown as={ButtonGroup} className='d-flex'>
+            <Button
+              variant={`${channel.id === currentChannelId ? 'secondary' : 'white'}`}
+              type='button'
+              className='w-100 rounded-0 text-start text-truncate'
+              id='removable-channel-button-left'
+              onClick={() => setCurrentChannelId(channel.id)}
+            >
+              <span className='me-1'>#</span>
+              {channel.name}
+            </Button>
+            <Dropdown.Toggle
+              variant={`${channel.id === currentChannelId ? 'secondary' : 'white'}`}
+              type='button'
+              id='removable-channel-button-right'
+              className='flex-grow-0'
+              split
+            >
+              <span className='visually-hidden'>Управление каналом</span>
+            </Dropdown.Toggle>
+            <Dropdown.Menu>
+              <Dropdown.Item role='button' href='#' tabIndex={0}>Удалить</Dropdown.Item>
+              <Dropdown.Item role='button' href='#' tabIndex={0}>Переименовать</Dropdown.Item>
+            </Dropdown.Menu>
+          </Dropdown>
+        </li>
+      )
+    })
+    return channelsButtons
+  }
+
   const renderModal = ({ modalInfo, hideModal, setCurrentChannelId }) => {
     if (!modalInfo.type) {
       return null
@@ -100,19 +151,7 @@ const Chat = () => {
           </Button>
         </div>
         <ul id='channels-box' className='nav flex-column nav-pills nav-fill px-2 mb-3 overflow-auto h-100 d-block'>
-          {channels.map((channel) => (
-            <li key={channel.id} className='nav-item w-100'>
-              <Button
-                variant={`${channel.id === currentChannelId ? 'secondary' : 'white'}`}
-                type='button'
-                className='w-100 rounded-0 text-start'
-                onClick={() => setCurrentChannelId(channel.id)}
-              >
-                <span className='me-1'>#</span>
-                {channel.name}
-              </Button>
-            </li>
-          ))}
+          {renderChannelsButtons(channels)}
         </ul>
       </Col>
 
