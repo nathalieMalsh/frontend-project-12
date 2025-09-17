@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Row } from 'react-bootstrap'
 import routes from '../routes'
-import { addChannels } from '../slices/channelsSlice.jsx'
+import { loadChannels } from '../slices/channelsSlice.jsx'
 import Chat from '../components/Chat.jsx'
 
 const MainPage = () => {
@@ -22,9 +22,9 @@ const MainPage = () => {
 
     const fetchData = async () => {
       try {
-        const responce = await axios.get(routes.getChannelsPath(), { headers: { Authorization: `Bearer ${token}`, } })
+        const responce = await axios.get(routes.channelsPath(), { headers: { Authorization: `Bearer ${token}`, } })
         const channels = responce.data // [{id: '1', name: 'general', removable: false}, {id: '2', name: 'random', removable: false}]
-        dispatch(addChannels(channels))
+        dispatch(loadChannels(channels))
       }
       catch (error) {
         console.log(error.message)

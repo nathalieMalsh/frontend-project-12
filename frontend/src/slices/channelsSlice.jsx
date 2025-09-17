@@ -10,12 +10,16 @@ const channelsSlice = createSlice({
   name:'channels',
   initialState,
   reducers: {
-    addChannels: (state, action) => {
+    loadChannels: (state, action) => {
       const channels = action.payload
       state.channels = channels
     },
+    addChannel: (state, action) => {
+      const newChannel = action.payload
+      state.channels = [...state.channels, newChannel]
+    }
   },
 })
 
-export const { addChannels } = channelsSlice.actions
+export const { loadChannels, addChannel } = channelsSlice.actions
 export default channelsSlice.reducer

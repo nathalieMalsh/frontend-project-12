@@ -1,6 +1,6 @@
 import { createSlice, current } from '@reduxjs/toolkit'
 
-// message { id: '1', body: 'new message', channelId: '1', username: 'admin }
+//  {body: 'hi hi', channelId: '1', username: 'admin', removable: true, id: '3'}
 
 const initialState = {
   messages: [],
