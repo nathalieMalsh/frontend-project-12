@@ -119,7 +119,7 @@ const Chat = () => {
             </Dropdown.Toggle>
             <Dropdown.Menu>
               <Dropdown.Item role='button' href='#' tabIndex={0} onClick={() => showModal('removing', channel)}>Удалить</Dropdown.Item>
-              <Dropdown.Item role='button' href='#' tabIndex={0}>Переименовать</Dropdown.Item>
+              <Dropdown.Item role='button' href='#' tabIndex={0} onClick={() => showModal('renaming', channel)}>Переименовать</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </li>

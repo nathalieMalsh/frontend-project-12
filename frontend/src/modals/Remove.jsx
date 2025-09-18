@@ -1,7 +1,4 @@
-import { useEffect, useRef } from 'react'
-import * as Yup from 'yup';
 import axios from 'axios'
-import { useFormik } from 'formik'
 import { Button, Modal } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { removeChannel } from '../slices/channelsSlice'
