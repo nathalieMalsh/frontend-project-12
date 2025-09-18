@@ -30,7 +30,7 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
   });
 
   const sendChannel = async (name) => {
-    try{
+    try {
       const responce = await axios.post(routes.channelsPath(), { name }, { headers: { Authorization: `Bearer ${token}`, }, })
       const newChannel = responce.data
       dispatch(addChannel(newChannel))
