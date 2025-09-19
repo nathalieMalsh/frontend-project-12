@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup';
 import axios from 'axios'
 import { useFormik } from 'formik'
@@ -12,6 +12,8 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+
+  const [isSubmitting, setSubmitting] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -30,6 +32,7 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
   });
 
   const sendChannel = async (name) => {
+    setSubmitting(true)
     try {
       const responce = await axios.post(routes.channelsPath(), { name }, { headers: { Authorization: `Bearer ${token}`, }, })
       const newChannel = responce.data
@@ -38,13 +41,14 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
     } catch (error) {
       console.log(error.message)
     }
+    setSubmitting(false)
   }
 
   const formik = useFormik({
     initialValues: { name: '' },
     validationSchema,
     validateOnChange: false,
-    onSubmit: (values) => {
+    onSubmit: (values,) => {
       const { name } = values
       sendChannel(name)
       onHide()
@@ -73,7 +77,7 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
             <div className='invalid-feedback'>{formik.errors.name && formik.touched.name ? formik.errors.name : ''}</div>
             <div className='d-flex justify-content-end'>
               <Button type='button' variant='secondary' className='me-2' onClick={() => onHide()}>Отменить</Button>
-              <Button type='submit' variant='primary'>Отправить</Button>
+              <Button type='submit' variant='primary' disabled={isSubmitting}>Отправить</Button>
             </div>
           </Form.Group>
         </Form>

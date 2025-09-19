@@ -32,7 +32,7 @@ const LoginForm = () => {
           setAuthError(true)
         }
 
-        setSubmitting(false);
+        setSubmitting(false)
       }}
     >
       {({ isSubmitting }) => (

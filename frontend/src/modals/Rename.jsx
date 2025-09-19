@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as Yup from 'yup';
 import axios from 'axios'
 import { useFormik } from 'formik'
@@ -12,6 +12,8 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+
+  const [isSubmitting, setSubmitting] = useState(false)
 
   const dispatch = useDispatch()
 
@@ -30,6 +32,7 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
   });
 
   const editChannel = async (newName, id) => {
+    setSubmitting(true)
     try {
       const responce = await axios.patch(`${routes.channelsPath()}/${id}`, { name: newName }, { headers: { Authorization: `Bearer ${token}`, }, })
       const renamedChannel = responce.data
@@ -37,6 +40,7 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
     } catch (error) {
       console.log(error.message)
     }
+    setSubmitting(false)
   }
 
   const formik = useFormik({
@@ -73,7 +77,7 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
             <div className='invalid-feedback'>{formik.errors.name && formik.touched.name ? formik.errors.name : ''}</div>
             <div className='d-flex justify-content-end'>
               <Button type='button' variant='secondary' className='me-2' onClick={() => onHide()}>Отменить</Button>
-              <Button type='submit' variant='primary'>Отправить</Button>
+              <Button type='submit' variant='primary' disabled={isSubmitting}>Отправить</Button>
             </div>
           </Form.Group>
         </Form>
