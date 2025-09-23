@@ -14,6 +14,7 @@ const MainPage = () => {
 
   const { userId } = useSelector((state) => state.auth)
   const token = userId?.token
+  console.log('Main Page, token', token)
 
   useEffect(() => {
     if (!userId) {
