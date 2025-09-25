@@ -1,17 +1,12 @@
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
 import { Col, Button, Form, Dropdown, ButtonGroup } from 'react-bootstrap'
-import { addMessage } from '../slices/messagesSlice'
 import routes from '../routes'
-import socket from '../socket'
 import getModal from '../modals/index.js'
 
 const Chat = () => {
   console.log('отрисовка Chat')
-  
-  const dispatch = useDispatch()
   
   const channels = useSelector((state) => state.channels.channels)
   
@@ -33,26 +28,6 @@ const Chat = () => {
   
   const showModal = (type, item = null) => setModalInfo({ type, item })
   const hideModal = () => setModalInfo({ type: null, item: null })
-
-  useEffect(() => {
-    socket.on('connect', () => console.log('Подключение к серверу'))
-    socket.on('disconnect', () => console.log('Подключение потеряно'))
-
-    return () => {
-      socket.off('connect')
-      socket.off('disconnect')
-    }
-  }, [])
-
-  useEffect(() => {
-    socket.on('newMessage', (message) => {
-      dispatch(addMessage(message))
-    })
-
-    return () => {
-      socket.off('newMessage')
-    }
-  }, [dispatch])
   
   useEffect(() => {
     setCurrentChannelChat(allMessages.filter((message) => message.channelId === currentChannelId))

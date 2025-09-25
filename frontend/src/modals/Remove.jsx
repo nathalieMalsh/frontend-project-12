@@ -1,12 +1,10 @@
 import { useState } from 'react'
 import axios from 'axios'
 import { Button, Modal } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import { removeChannel } from '../slices/channelsSlice'
+import { useSelector} from 'react-redux'
 import routes from '../routes'
 
 const Remove = ({ modalInfo, onHide, setCurrentChannelId }) => {
-  const dispatch = useDispatch()
 
   const { userId } = useSelector((state) => state.auth)
   const token = userId?.token
@@ -17,9 +15,7 @@ const Remove = ({ modalInfo, onHide, setCurrentChannelId }) => {
     e.preventDefault()
     setRemoving(true)
     try {
-      const responce = await axios.delete(`${routes.channelsPath()}/${modalInfo.item.id}`, { headers: { Authorization: `Bearer ${token}`, },})
-      const { id } = responce.data
-      dispatch(removeChannel(id))
+      axios.delete(`${routes.channelsPath()}/${modalInfo.item.id}`, { headers: { Authorization: `Bearer ${token}`, },})
       setCurrentChannelId('1')
       onHide()
     } catch (error) {

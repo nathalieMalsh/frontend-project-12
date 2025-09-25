@@ -3,8 +3,7 @@ import * as Yup from 'yup';
 import axios from 'axios'
 import { useFormik } from 'formik'
 import { Button, Modal, Form } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import { addChannel } from '../slices/channelsSlice'
+import { useSelector } from 'react-redux'
 import routes from '../routes'
 
 const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
@@ -14,8 +13,6 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
   }, [])
 
   const [isSubmitting, setSubmitting] = useState(false)
-
-  const dispatch = useDispatch()
 
   const channelsNames = useSelector((state) => state.channels.channels).map((channel) => channel.name)
 
@@ -36,7 +33,6 @@ const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
     try {
       const responce = await axios.post(routes.channelsPath(), { name }, { headers: { Authorization: `Bearer ${token}`, }, })
       const newChannel = responce.data
-      dispatch(addChannel(newChannel))
       setCurrentChannelId(newChannel.id)
     } catch (error) {
       console.log(error.message)

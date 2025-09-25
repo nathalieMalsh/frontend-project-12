@@ -3,8 +3,7 @@ import * as Yup from 'yup';
 import axios from 'axios'
 import { useFormik } from 'formik'
 import { Button, Modal, Form } from 'react-bootstrap'
-import { useSelector, useDispatch } from 'react-redux'
-import { renameChannel } from '../slices/channelsSlice'
+import { useSelector } from 'react-redux'
 import routes from '../routes'
 
 const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
@@ -14,8 +13,6 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
   }, [])
 
   const [isSubmitting, setSubmitting] = useState(false)
-
-  const dispatch = useDispatch()
 
   const channelsNames = useSelector((state) => state.channels.channels).map((channel) => channel.name)
 
@@ -34,9 +31,7 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
   const editChannel = async (newName, id) => {
     setSubmitting(true)
     try {
-      const responce = await axios.patch(`${routes.channelsPath()}/${id}`, { name: newName }, { headers: { Authorization: `Bearer ${token}`, }, })
-      const renamedChannel = responce.data
-      dispatch(renameChannel(renamedChannel))
+      axios.patch(`${routes.channelsPath()}/${id}`, { name: newName }, { headers: { Authorization: `Bearer ${token}`, }, })
     } catch (error) {
       console.log(error.message)
     }
