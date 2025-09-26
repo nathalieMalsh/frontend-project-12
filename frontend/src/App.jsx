@@ -1,6 +1,5 @@
 import { Routes, Route } from 'react-router-dom'
 import { BrowserRouter } from 'react-router-dom'
-
 import MainPage from './pages/MainPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import SignUp from './pages/SignUpPage.jsx'

@@ -1,10 +1,24 @@
-import React from 'react'
 import { Provider } from 'react-redux'
 import { io } from 'socket.io-client'
+import i18next from 'i18next'
+import { initReactI18next, I18nextProvider } from 'react-i18next'
 import store from './store.js'
 import { addMessage } from './slices/messagesSlice.jsx'
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.jsx'
+import resources from './locales/ru.js'
 import App from './App.jsx'
+
+i18next	
+  .use(initReactI18next)
+  .init({
+    resources,
+    debug: false,
+    lng: 'ru',
+    fallbackLng: 'ru',
+    interpolation: {
+      escapeValue: false,
+    },
+  });
 
 const socket = io();
 
@@ -32,12 +46,12 @@ socket.on('renameChannel', (payload) => {
   store.dispatch(renameChannel(payload))
 })
 
-const init = () => {
-  return (
-    <Provider store={store}>
+const init = () => (
+  <Provider store={store}>
+    <I18nextProvider i18n={i18next}>
       <App />
-    </Provider>
-  )
-}
+    </I18nextProvider>
+  </Provider>
+)
 
 export default init

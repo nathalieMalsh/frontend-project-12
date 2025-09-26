@@ -5,11 +5,14 @@ import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 import routes from '../routes'
 import { signUp } from '../slices/authSlice'
 
 const SignUpForm = () => {
   console.log('отрисовка SignUpForm')
+
+  const { t } = useTranslation()
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -19,17 +22,17 @@ const SignUpForm = () => {
   const validationSchema = Yup.object().shape({
     username: Yup.string()
     .trim()
-    .required('Обязательное поле')
-    .min(3, 'От 3 до 20 символов')
-    .max(20, 'От 3 до 20 символов'),
+    .required(t('errors.required'))
+    .min(3, t('errors.symbolsLength'))
+    .max(20, t('errors.symbolsLength')),
     password: Yup.string()
     .trim()
-    .required('Обязательное поле')
-    .min(6, 'Не менее 6 символов'),
+    .required(t('errors.required'))
+    .min(6, t('errors.minPasswordLength')),
     confirmPassword: Yup.string()
     .trim()
-    .required('Обязательное поле')
-    .oneOf([Yup.ref('password'), null], 'Пароли должны совпадать')
+    .required(t('errors.required'))
+    .oneOf([Yup.ref('password'), null], t('errors.confirmPassword'))
   });
   
   return (
@@ -57,7 +60,7 @@ const SignUpForm = () => {
     >
       {({ errors, touched }) => (
         <Form className='w-50'>
-          <h1 className='text-center mb-4'>Регистрация</h1>
+          <h1 className='text-center mb-4'>{t('signUpForm.h1')}</h1>
 
           <div className='form-floating mb-3'>
             <Field
@@ -69,8 +72,8 @@ const SignUpForm = () => {
               id='username'
               className={`form-control ${(errors.username && touched.username) || isUsernameTaken ? 'is-invalid' : ''}`}
             />
-            <label htmlFor='username'>Имя пользователя</label>
-            <div placement='right' className='invalid-tooltip'>{isUsernameTaken ? 'Такой пользователь уже существует' : errors.username ? errors.username : ''}
+            <label htmlFor='username'>{t('signUpForm.usernameLabel')}</label>
+            <div placement='right' className='invalid-tooltip'>{isUsernameTaken ? t('errors.authorizationError') : errors.username ? errors.username : ''}
             </div>
           </div>
 
@@ -87,7 +90,7 @@ const SignUpForm = () => {
               aria-autocomplete='list'
             />
             <div className='invalid-tooltip'>{errors.password ? errors.password : ''}</div>
-            <label htmlFor='password'>Пароль</label>
+            <label htmlFor='password'>{t('signUpForm.passwordLabel')}</label>
           </div>
 
           <div className='form-floating mb-4'>
@@ -101,11 +104,11 @@ const SignUpForm = () => {
               className={`form-control ${errors.confirmPassword && touched.confirmPassword && 'is-invalid'}`}
             />
             <div className='invalid-tooltip'>{errors.confirmPassword ? errors.confirmPassword : ''}</div>
-            <label htmlFor='confirmPassword'>Подтвердите пароль</label>
+            <label htmlFor='confirmPassword'>{t('signUpForm.confirmPasswordLabel')}</label>
           </div>
 
           <Button type='submit' variant='outline-primary' className='w-100'>
-            Зарегистрироваться
+            {t('signUpForm.registrationButton')}
           </Button>
         </Form>
       )}

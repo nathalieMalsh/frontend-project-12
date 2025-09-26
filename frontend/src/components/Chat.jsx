@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { Col, Button, Form, Dropdown, ButtonGroup } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 import routes from '../routes'
 import getModal from '../modals/index.js'
 
 const Chat = () => {
   console.log('отрисовка Chat')
+
+  const { t } = useTranslation()
   
   const channels = useSelector((state) => state.channels.channels)
   
@@ -48,7 +51,7 @@ const Chat = () => {
       setInputValue('')
     }
     catch (error) {
-      console.log('Ошибка при отправке сообщения:', error.message)
+      console.log(error.message)
     }
   }
 
@@ -90,11 +93,11 @@ const Chat = () => {
               className='flex-grow-0'
               split
             >
-              <span className='visually-hidden'>Управление каналом</span>
+              <span className='visually-hidden'>{t('channels.channelManagement')}</span>
             </Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item role='button' href='#' tabIndex={0} onClick={() => showModal('removing', channel)}>Удалить</Dropdown.Item>
-              <Dropdown.Item role='button' href='#' tabIndex={0} onClick={() => showModal('renaming', channel)}>Переименовать</Dropdown.Item>
+              <Dropdown.Item role='button' href='#' tabIndex={0} onClick={() => showModal('removing', channel)}>{t('channels.dropdownToggle.remove')}</Dropdown.Item>
+              <Dropdown.Item role='button' href='#' tabIndex={0} onClick={() => showModal('renaming', channel)}>{t('channels.dropdownToggle.rename')}</Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
         </li>
@@ -114,9 +117,9 @@ const Chat = () => {
   return (
     <>
       {/* Список каналов */}
-      <Col xs={4} md={2} className='border-end px-0 bg-light flex-column h-100 d-flex' /* div 2 */>
+      <Col xs={4} md={2} className='border-end px-0 bg-light flex-column h-100 d-flex'>
         <div className='d-flex mt-1 justify-content-between mb-2 ps-4 pe-2 p-4'>
-          <b>Каналы</b>
+          <b>{t('channels.channels')}</b>
           <Button variant='outline-primary' className='p-0 text-primary btn btn-group-vertical' onClick={() => showModal('adding')}>
             <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='20' height='20' fill='currentColor' className='bi bi-plus-square'>
               <path d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z'/>
@@ -131,21 +134,21 @@ const Chat = () => {
       </Col>
 
       {/* Чат справа */}
-      <Col className='p-0 h-100' /* div 3 */>
+      <Col className='p-0 h-100'>
         <div className='d-flex flex-column h-100'>
           <div className='bg-light mb-4 p-3 shadow-sm small'>
             <p className='m-0'>
               <b># {channels.find(c => c.id === currentChannelId)?.name}</b>
             </p>
-            <span className='text-muted'>{currentChannelChat.length} сообщений</span>
+            <span className='text-muted'>{t('messages.messagesCounter.messagesCount', {count: currentChannelChat.length})}</span>
           </div>
 
           <div id='messages-box' className='chat-messages overflow-auto px-5'>
             {currentChannelChat.map(({ id, body, username }) => (
               <div key={id} className='text-break mb-2'>
                 <b>{username}</b>: {body}
-             </div>
-            ))
+              </div>
+              ))
             }
           </div>
 
@@ -155,8 +158,8 @@ const Chat = () => {
                 <Form.Control
                   name='body'
                   type='text'
-                  aria-label='Новое сообщение'
-                  placeholder='Введите сообщение...'
+                  aria-label={t('chat.ariaLabel')}
+                  placeholder={t('chat.placeholder')}
                   className='border-0 p-0 ps-2 form-control'
                   value={inputValue}
                   onChange={handleChange}
@@ -165,7 +168,7 @@ const Chat = () => {
                   <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' width='20' height='20' fill='currentColor' className='bi bi-arrow-right-square'>
                     <path fillRule='evenodd' d='M15 2a1 1 0 0 0-1-1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1zM0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm4.5 5.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z'/>
                   </svg>
-                  <span className='visually-hidden'>Отправить</span>
+                  <span className='visually-hidden'>{t('chat.send')}</span>
                 </Button>
               </div>
             </Form>

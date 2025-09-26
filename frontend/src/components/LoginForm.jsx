@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
 import routes from '../routes'
 import { loginSuccess } from '../slices/authSlice'
 
 const LoginForm = () => {
   console.log('отрисовка LoginForm')
+
+  const { t } = useTranslation()
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -37,7 +40,7 @@ const LoginForm = () => {
     >
       {({ isSubmitting }) => (
         <Form className='col-12 mt-3 mt-md-0'>
-          <h1 className='text-center mb-4'>Войти</h1>
+          <h1 className='text-center mb-4'>{t('loginForm.h1')}</h1>
 
           <div className='form-floating mb-3'>
             <Field
@@ -49,7 +52,7 @@ const LoginForm = () => {
               id='username'
               className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
-            <label htmlFor="username">Ваш ник</label>
+            <label htmlFor="username">{t('loginForm.usernameLabel')}</label>
           </div>
 
           <div className='form-floating mb-4'>
@@ -62,12 +65,12 @@ const LoginForm = () => {
               id="password"
               className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
-            <label htmlFor="password">Пароль</label>
-            {authError && <div className='invalid-tooltip'>Неверные имя пользователя или пароль</div>}
+            <label htmlFor="password">{t('loginForm.passwordLabel')}</label>
+            {authError && <div className='invalid-tooltip'>{t('errors.loginError')}</div>}
           </div>
 
           <Button type='submit' variant='outline-primary' className='w-100 mb-3' disabled={isSubmitting}>
-            Войти
+            {t('loginForm.loginButton')}
           </Button>
         </Form>
       )}

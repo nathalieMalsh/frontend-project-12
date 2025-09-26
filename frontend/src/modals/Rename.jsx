@@ -4,9 +4,13 @@ import axios from 'axios'
 import { useFormik } from 'formik'
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+
 import routes from '../routes'
 
 const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
+  const { t } = useTranslation()
+
   const inputRef = useRef()
   useEffect(() => {
     inputRef.current.focus()
@@ -22,10 +26,10 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
   const validationSchema = Yup.object().shape({
     name: Yup.string()
     .trim()
-    .required('Обязательное поле')
-    .min(3, 'От 3 до 20 символов')
-    .max(20, 'От 3 до 20 символов')
-    .notOneOf(channelsNames, 'Должно быть уникальным')
+    .required(t('errors.required'))
+    .min(3, t('errors.symbolsLength'))
+    .max(20, t('errors.symbolsLength'))
+    .notOneOf(channelsNames, t('errors.mustBeUnique'))
   });
 
   const editChannel = async (newName, id) => {
@@ -53,7 +57,7 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
   return (
     <Modal show centered>
       <Modal.Header closeButton onHide={onHide}>
-        <Modal.Title>Переименовать канал</Modal.Title>
+        <Modal.Title>{t('modals.renameChannel')}</Modal.Title>
       </Modal.Header>
       
       <Modal.Body>
@@ -68,11 +72,11 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
               onChange={formik.handleChange}
               required
             />
-            <Form.Label className='visually-hidden' htmlFor='name'>Имя канала</Form.Label>
+            <Form.Label className='visually-hidden' htmlFor='name'>{t('modals.channelName')}</Form.Label>
             <div className='invalid-feedback'>{formik.errors.name && formik.touched.name ? formik.errors.name : ''}</div>
             <div className='d-flex justify-content-end'>
-              <Button type='button' variant='secondary' className='me-2' onClick={() => onHide()}>Отменить</Button>
-              <Button type='submit' variant='primary' disabled={isSubmitting}>Отправить</Button>
+              <Button type='button' variant='secondary' className='me-2' onClick={() => onHide()}>{t('modals.cancelButton')}</Button>
+              <Button type='submit' variant='primary' disabled={isSubmitting}>{t('modals.sendButton')}</Button>
             </div>
           </Form.Group>
         </Form>

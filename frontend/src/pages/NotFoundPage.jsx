@@ -1,12 +1,17 @@
+import { useTranslation } from 'react-i18next'
 import Header from "../components/Header"
 
-const NotFoundPage = () => (
-  <div className='h-100 d-flex flex-column'>
-    <Header />
-    <div>
-      <h1>404 - Страница не найдена</h1>
+const NotFoundPage = () => {
+  const { t } = useTranslation()
+
+  return (
+    <div className='h-100 d-flex flex-column'>
+      <Header />
+      <div>
+        <h1>{t('notFoundPage.h1')}</h1>
+      </div>
     </div>
-  </div>
-)
+  )
+}
 
 export default NotFoundPage
