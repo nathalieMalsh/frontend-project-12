@@ -5,6 +5,7 @@ import { useFormik } from 'formik'
 import { Button, Modal, Form } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 
 import routes from '../routes'
 
@@ -36,8 +37,10 @@ const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
     setSubmitting(true)
     try {
       axios.patch(`${routes.channelsPath()}/${id}`, { name: newName }, { headers: { Authorization: `Bearer ${token}`, }, })
+      toast.success(t('toast.renameChannel'))
     } catch (error) {
       console.log(error.message)
+      toast.error(t('errors.toastRenameChannel'))
     }
     setSubmitting(false)
   }

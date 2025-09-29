@@ -1,7 +1,8 @@
 import { Provider } from 'react-redux'
 import { io } from 'socket.io-client'
 import i18next from 'i18next'
-import { initReactI18next, I18nextProvider } from 'react-i18next'
+import { initReactI18next, I18nextProvider, useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import store from './store.js'
 import { addMessage } from './slices/messagesSlice.jsx'
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.jsx'
@@ -20,7 +21,7 @@ i18next
     },
   });
 
-const socket = io();
+const socket = io()
 
 socket.on('connect', () => {
   console.log('Соединение с сервером установлено')
@@ -28,6 +29,7 @@ socket.on('connect', () => {
 
 socket.on('disconnect', () => {
   console.log('Соединение с сервером потеряно')
+  toast.error(i18next.t('errors.server'))
 })
 
 socket.on('newMessage', (payload) => {

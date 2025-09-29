@@ -40,6 +40,12 @@ export default {
         confirmPassword: 'Пароли должны совпадать',
         authorizationError: 'Такой пользователь уже существует',
         loginError: 'Неверные имя пользователя или пароль',
+        toastAddChannel: 'Ошибка при создании канала',
+        toastRenameChannel: 'Ошибка при переименовании канала',
+        toastRemoveChannel: 'Ошибка при удалении канала',
+        authError: 'Ошибка авторизации',
+        loadDataError: 'Ошибка загрузки данных',
+        server: 'Соединение с сервером потеряно',
       },
       signUpPage: {
         altText: 'Регистрация',
@@ -68,7 +74,12 @@ export default {
       header: {
         navbarBrand: 'Hexlet Chat',
         signOutButton: 'Выйти',
-      }
+      },
+      toast: {
+        addChannel: 'Канал создан',
+        renameChannel: 'Канал переименован',
+        removeChannel: 'Канал удален',
+      },
     },
   },
 }

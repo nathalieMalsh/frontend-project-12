@@ -3,6 +3,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { Container, Row } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import { toast } from 'react-toastify'
 import routes from '../routes'
 import { loadChannels } from '../slices/channelsSlice.jsx'
 import Chat from '../components/Chat.jsx'
@@ -12,6 +14,7 @@ const MainPage = () => {
   console.log('отрисовка MainPage')
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { t } = useTranslation()
 
   const { userId } = useSelector((state) => state.auth)
   const token = userId?.token
@@ -20,6 +23,7 @@ const MainPage = () => {
   useEffect(() => {
     if (!userId) {
       navigate('/login')
+      return
     }
 
     const fetchData = async () => {
@@ -31,8 +35,12 @@ const MainPage = () => {
       catch (error) {
         if (error.status === 401) {
           navigate('/login')
+          console.log(error.message)
+          toast.error(t('errors.authError'))
+        } else {
+          console.log(error.message)
+          toast.error(t('errors.loadDataError'))
         }
-        console.log(error.message)
       }
     }
     fetchData()
@@ -51,4 +59,4 @@ const MainPage = () => {
   )
 }
 
-export default MainPage;
+export default MainPage
