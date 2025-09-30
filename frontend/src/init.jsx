@@ -1,8 +1,9 @@
 import { Provider } from 'react-redux'
 import { io } from 'socket.io-client'
 import i18next from 'i18next'
-import { initReactI18next, I18nextProvider, useTranslation } from 'react-i18next'
+import { initReactI18next, I18nextProvider } from 'react-i18next'
 import { toast } from 'react-toastify'
+import filter from 'leo-profanity'
 import store from './store.js'
 import { addMessage } from './slices/messagesSlice.jsx'
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.jsx'
@@ -20,6 +21,9 @@ i18next
       escapeValue: false,
     },
   });
+
+filter.add(filter.getDictionary('ru'))
+filter.add(filter.getDictionary('en'))
 
 const socket = io()
 

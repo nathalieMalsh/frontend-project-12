@@ -3,6 +3,7 @@ import axios from 'axios'
 import { useSelector } from 'react-redux'
 import { Col, Button, Form, Dropdown, ButtonGroup } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
+import filter from 'leo-profanity'
 import routes from '../routes'
 import getModal from '../modals/index.js'
 
@@ -84,7 +85,7 @@ const Chat = () => {
               onClick={() => setCurrentChannelId(channel.id)}
             >
               <span className='me-1'>#</span>
-              {channel.name}
+              {filter.clean(channel.name)}
             </Button>
             <Dropdown.Toggle
               variant={`${channel.id === currentChannelId ? 'secondary' : 'white'}`}
@@ -146,7 +147,7 @@ const Chat = () => {
           <div id='messages-box' className='chat-messages overflow-auto px-5'>
             {currentChannelChat.map(({ id, body, username }) => (
               <div key={id} className='text-break mb-2'>
-                <b>{username}</b>: {body}
+                <b>{username}</b>: {filter.clean(body)}
               </div>
               ))
             }
