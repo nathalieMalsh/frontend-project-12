@@ -6,6 +6,7 @@ import MainPage from './pages/MainPage.jsx'
 import LoginPage from './pages/LoginPage.jsx'
 import SignUp from './pages/SignUpPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
+import TestError from './components/TestError.jsx'
 
 const App = () => {
   
@@ -17,6 +18,7 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
+      <TestError />
       <ToastContainer position='top-right' autoClose={5000}/>
     </BrowserRouter>
   )

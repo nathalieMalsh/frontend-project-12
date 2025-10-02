@@ -4,6 +4,7 @@ import i18next from 'i18next'
 import { initReactI18next, I18nextProvider } from 'react-i18next'
 import { toast } from 'react-toastify'
 import filter from 'leo-profanity'
+import { Provider as RollbarProvider, ErrorBoundary } from '@rollbar/react'
 import store from './store.js'
 import { addMessage } from './slices/messagesSlice.jsx'
 import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice.jsx'
@@ -52,10 +53,19 @@ socket.on('renameChannel', (payload) => {
   store.dispatch(renameChannel(payload))
 })
 
+const rollbarConfig = {
+  accessToken: 'abdfc76d83a941f9940b1b5b1ac34bcacee5bc9abdbe6ad496a102764fe8c1853bdbf5340b0dccbaf6d5fea565a12fd5',
+  environment: 'production',
+}
+
 const init = () => (
   <Provider store={store}>
     <I18nextProvider i18n={i18next}>
-      <App />
+      <RollbarProvider config={rollbarConfig}>
+        <ErrorBoundary>
+          <App />
+        </ErrorBoundary>
+      </RollbarProvider>
     </I18nextProvider>
   </Provider>
 )
