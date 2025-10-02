@@ -55,7 +55,7 @@ socket.on('renameChannel', (payload) => {
 
 const rollbarConfig = {
   accessToken: 'abdfc76d83a941f9940b1b5b1ac34bcacee5bc9abdbe6ad496a102764fe8c1853bdbf5340b0dccbaf6d5fea565a12fd5',
-  environment: 'production',
+  environment: process.env.NODE_ENV || 'development',
 }
 
 const init = () => (
