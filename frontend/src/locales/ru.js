@@ -16,6 +16,7 @@ export default {
       },
       channels: {
         channels: 'Каналы',
+        add: '+',
         channelManagement: 'Управление каналом',
         dropdownToggle: {
           remove: 'Удалить',
@@ -45,7 +46,7 @@ export default {
         toastRemoveChannel: 'Ошибка при удалении канала',
         authError: 'Ошибка авторизации',
         loadDataError: 'Ошибка загрузки данных',
-        server: 'Соединение с сервером потеряно',
+        server: 'Ошибка соединения',
       },
       signUpPage: {
         altText: 'Регистрация',
@@ -78,7 +79,7 @@ export default {
       toast: {
         addChannel: 'Канал создан',
         renameChannel: 'Канал переименован',
-        removeChannel: 'Канал удален',
+        removeChannel: 'Канал удалён',
       },
     },
   },

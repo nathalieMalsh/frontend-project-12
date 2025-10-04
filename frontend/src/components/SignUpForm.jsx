@@ -10,8 +10,6 @@ import routes from '../routes'
 import { signUp } from '../slices/authSlice'
 
 const SignUpForm = () => {
-  console.log('отрисовка SignUpForm')
-
   const { t } = useTranslation()
 
   const navigate = useNavigate()

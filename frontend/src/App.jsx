@@ -7,19 +7,16 @@ import LoginPage from './pages/LoginPage.jsx'
 import SignUp from './pages/SignUpPage.jsx'
 import NotFoundPage from './pages/NotFoundPage.jsx'
 
-const App = () => {
-  
-  return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUp />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-      <ToastContainer position='top-right' autoClose={5000}/>
-    </BrowserRouter>
-  )
-}
+const App = () => (
+  <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUp />} />
+      <Route path="*" element={<NotFoundPage />} />
+    </Routes>
+    <ToastContainer position='top-right' autoClose={5000}/>
+  </BrowserRouter>
+)
 
 export default App

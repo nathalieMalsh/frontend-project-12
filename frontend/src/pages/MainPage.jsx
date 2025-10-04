@@ -7,18 +7,16 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import routes from '../routes'
 import { loadChannels } from '../slices/channelsSlice.jsx'
-import Chat from '../components/Chat.jsx'
+import Chat from '../components/Chat/Chat.jsx'
 import Header from '../components/Header.jsx'
 
 const MainPage = () => {
-  console.log('отрисовка MainPage')
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
   const { userId } = useSelector((state) => state.auth)
   const token = userId?.token
-  console.log('Main Page, token', token)
 
   useEffect(() => {
     if (!userId) {
