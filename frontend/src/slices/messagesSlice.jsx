@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 import { removeChannel } from './channelsSlice'
 
 //  {body: 'hi hi', channelId: '1', username: 'admin', removable: true, id: '3'}
@@ -21,7 +21,6 @@ const messagesSlice = createSlice({
       const channelId = action.payload
       const restMessages = state.messages.filter((message) => message.channelId !== channelId)
       state.messages = restMessages
-      console.log(current(state))
     })
   }
 })

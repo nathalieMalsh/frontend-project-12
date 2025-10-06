@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import routes from '../routes'
 
-const Add = ({ modalInfo, onHide, setCurrentChannelId }) => {
+const Add = ({ onHide, setCurrentChannelId }) => {
   const { t } = useTranslation()
 
   const inputRef = useRef()

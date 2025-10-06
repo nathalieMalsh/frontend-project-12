@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 // channels [{id: '1', name: 'general', removable: false}, {id: '2', name: 'random', removable: false}]
 
@@ -31,7 +31,6 @@ const channelsSlice = createSlice({
         return channel
       })
       state.channels = updatedChannels
-      console.log(current(state))
     }
   },
 })

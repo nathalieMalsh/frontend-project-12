@@ -9,7 +9,7 @@ import { toast } from 'react-toastify'
 
 import routes from '../routes'
 
-const Rename = ({ modalInfo, onHide, setCurrentChannelId }) => {
+const Rename = ({ modalInfo, onHide }) => {
   const { t } = useTranslation()
 
   const inputRef = useRef()
