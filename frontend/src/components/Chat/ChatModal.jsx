@@ -1,4 +1,4 @@
-import getModal from '../../modals/index.js'
+import getModal from "../../modals/index.js"
 
 const ChatModal = ({ modalInfo, hideModal, setCurrentChannelId }) => {
   if (!modalInfo.type) {
