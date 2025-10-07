@@ -9,7 +9,7 @@ const initialState = {
 }
 
 const authSlice = createSlice({
-  name:'auth',
+  name: 'auth',
   initialState,
   reducers: {
     loginSuccess: (state, action) => {
@@ -25,7 +25,7 @@ const authSlice = createSlice({
       const userData = action.payload
       state.userId = userData
       localStorage.setItem('userId', JSON.stringify(userData))
-    }
+    },
   },
 })
 

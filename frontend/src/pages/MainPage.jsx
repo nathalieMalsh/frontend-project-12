@@ -15,7 +15,7 @@ const MainPage = () => {
   const dispatch = useDispatch()
   const { t } = useTranslation()
 
-  const { userId } = useSelector((state) => state.auth)
+  const { userId } = useSelector(state => state.auth)
   const token = userId?.token
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const MainPage = () => {
 
     const fetchData = async () => {
       try {
-        const responce = await axios.get(routes.channelsPath(), { headers: { Authorization: `Bearer ${token}`, } })
+        const responce = await axios.get(routes.channelsPath(), { headers: { Authorization: `Bearer ${token}` } })
         const channels = responce.data // [{id: '1', name: 'general', removable: false}, {id: '2', name: 'random', removable: false}]
         dispatch(loadChannels(channels))
       }
@@ -35,21 +35,21 @@ const MainPage = () => {
           navigate('/login')
           console.log(error.message)
           toast.error(t('errors.authError'))
-        } else {
+        }
+        else {
           console.log(error.message)
           toast.error(t('errors.loadDataError'))
         }
       }
     }
     fetchData()
-
   }, [dispatch, navigate, token, userId])
 
   return (
-    <div className='h-100 d-flex flex-column'>
+    <div className="h-100 d-flex flex-column">
       <Header />
-      <Container className='h-100 my-4 overflow-hidden rounded shadow flex-fill'>
-        <Row className='h-100 bg-white flex-md-row'>
+      <Container className="h-100 my-4 overflow-hidden rounded shadow flex-fill">
+        <Row className="h-100 bg-white flex-md-row">
           <Chat />
         </Row>
       </Container>

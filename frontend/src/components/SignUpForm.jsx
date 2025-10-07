@@ -23,11 +23,11 @@ const SignUpForm = () => {
       .required(t('errors.required'))
       .min(3, t('errors.symbolsLength'))
       .max(20, t('errors.symbolsLength')),
-      password: Yup.string()
+    password: Yup.string()
       .trim()
       .required(t('errors.required'))
       .min(6, t('errors.minPasswordLength')),
-      confirmPassword: Yup.string()
+    confirmPassword: Yup.string()
       .trim()
       .required(t('errors.required'))
       .oneOf([Yup.ref('password'), null], t('errors.confirmPassword')),

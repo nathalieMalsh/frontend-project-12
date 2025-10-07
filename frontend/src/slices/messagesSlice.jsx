@@ -8,7 +8,7 @@ const initialState = {
 }
 
 const messagesSlice = createSlice({
-  name:'messages',
+  name: 'messages',
   initialState,
   reducers: {
     addMessage: (state, action) => {
@@ -19,10 +19,10 @@ const messagesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(removeChannel, (state, action) => {
       const channelId = action.payload
-      const restMessages = state.messages.filter((message) => message.channelId !== channelId)
+      const restMessages = state.messages.filter(message => message.channelId !== channelId)
       state.messages = restMessages
     })
-  }
+  },
 })
 
 export const { addMessage } = messagesSlice.actions

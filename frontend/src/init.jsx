@@ -11,7 +11,7 @@ import { addChannel, removeChannel, renameChannel } from './slices/channelsSlice
 import resources from './locales/ru.js'
 import App from './App.jsx'
 
-i18next	
+i18next
   .use(initReactI18next)
   .init({
     resources,
@@ -21,7 +21,7 @@ i18next
     interpolation: {
       escapeValue: false,
     },
-  });
+  })
 
 filter.add(filter.getDictionary('ru'))
 filter.add(filter.getDictionary('en'))
@@ -55,7 +55,7 @@ socket.on('renameChannel', (payload) => {
 
 const rollbarConfig = {
   accessToken: 'abdfc76d83a941f9940b1b5b1ac34bcacee5bc9abdbe6ad496a102764fe8c1853bdbf5340b0dccbaf6d5fea565a12fd5',
-  environment: process.env.NODE_ENV || 'development',
+  environment: 'development',
 }
 
 const init = () => (

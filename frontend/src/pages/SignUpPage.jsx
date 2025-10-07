@@ -7,16 +7,16 @@ const SignUp = () => {
   const { t } = useTranslation()
 
   return (
-    <div className='h-100 d-flex flex-column'>
+    <div className="h-100 d-flex flex-column">
       <Header />
-      <Container fluid className='h-100'>
-        <Row className='justify-content-center align-content-center h-100'>
+      <Container fluid className="h-100">
+        <Row className="justify-content-center align-content-center h-100">
           <Col xs={12} md={8} xxl={6}>
-            <Card className='shadow-sm'>
-              <Card.Body className='d-flex flex-column flex-md-row justify-content-around align-items-center p-5'>
+            <Card className="shadow-sm">
+              <Card.Body className="d-flex flex-column flex-md-row justify-content-around align-items-center p-5">
                 <div>
                   <img src="https://frontend-chat-ru.hexlet.app/assets/avatar_1-D7Cot-zE.jpg" alt={t('signUpPage.altText')} className="rounded-circle" />
-                </div> 
+                </div>
                 <SignUpForm />
               </Card.Body>
             </Card>

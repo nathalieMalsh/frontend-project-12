@@ -50,7 +50,7 @@ const LoginForm = () => {
               id="username"
               className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
-            <label htmlFor="username">{t("loginForm.usernameLabel")}</label>
+            <label htmlFor="username">{t('loginForm.usernameLabel')}</label>
           </div>
 
           <div className="form-floating mb-4">
@@ -61,7 +61,7 @@ const LoginForm = () => {
               required
               placeholder="Пароль"
               id="password"
-              className={`form-control ${authError ? "is-invalid" : ""}`}
+              className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
             <label htmlFor="password">{t('loginForm.passwordLabel')}</label>
             {authError && <div className="invalid-tooltip">{t('errors.loginError')}</div>}
