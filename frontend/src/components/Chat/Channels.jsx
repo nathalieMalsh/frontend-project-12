@@ -1,6 +1,6 @@
-import { Col, Button } from "react-bootstrap"
-import { useTranslation } from "react-i18next"
-import ChannelItem from "./ChannelItem"
+import { Col, Button } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import ChannelItem from './ChannelItem'
 
 const Channels = ({ channels, currentChannelId, setCurrentChannelId, showModal }) => {
   const { t } = useTranslation()

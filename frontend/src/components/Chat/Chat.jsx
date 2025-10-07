@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
-import { useSelector } from "react-redux"
-import axios from "axios"
-import routes from "../../routes.js"
-import Channels from "./Channels.jsx"
-import Messages from "./Messages.jsx"
-import ChatModal from "./ChatModal.jsx"
+import { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import axios from 'axios'
+import routes from '../../routes.js'
+import Channels from './Channels.jsx'
+import Messages from './Messages.jsx'
+import ChatModal from './ChatModal.jsx'
 
 const Chat = () => {
   const channels = useSelector(state => state.channels.channels)

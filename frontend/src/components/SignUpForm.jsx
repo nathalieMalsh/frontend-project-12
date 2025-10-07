@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import * as Yup from 'yup';
+import * as Yup from 'yup'
 import axios from 'axios'
 import { Formik, Form, Field } from 'formik'
 import { useNavigate } from 'react-router-dom'
@@ -19,26 +19,26 @@ const SignUpForm = () => {
 
   const validationSchema = Yup.object().shape({
     username: Yup.string()
-    .trim()
-    .required(t('errors.required'))
-    .min(3, t('errors.symbolsLength'))
-    .max(20, t('errors.symbolsLength')),
-    password: Yup.string()
-    .trim()
-    .required(t('errors.required'))
-    .min(6, t('errors.minPasswordLength')),
-    confirmPassword: Yup.string()
-    .trim()
-    .required(t('errors.required'))
-    .oneOf([Yup.ref('password'), null], t('errors.confirmPassword'))
-  });
-  
+      .trim()
+      .required(t('errors.required'))
+      .min(3, t('errors.symbolsLength'))
+      .max(20, t('errors.symbolsLength')),
+      password: Yup.string()
+      .trim()
+      .required(t('errors.required'))
+      .min(6, t('errors.minPasswordLength')),
+      confirmPassword: Yup.string()
+      .trim()
+      .required(t('errors.required'))
+      .oneOf([Yup.ref('password'), null], t('errors.confirmPassword')),
+  })
+
   return (
-    <Formik 
+    <Formik
       initialValues={{ username: '', password: '', confirmPassword: '' }}
       validationSchema={validationSchema}
-      onSubmit={ async (values, { setSubmitting }) => {
-        setSubmitting(true) 
+      onSubmit={async (values, { setSubmitting }) => {
+        setSubmitting(true)
         const { username, password } = values
         try {
           const responce = await axios.post(routes.signupPath(), { username, password })
@@ -57,55 +57,56 @@ const SignUpForm = () => {
       }}
     >
       {({ errors, touched }) => (
-        <Form className='w-50'>
-          <h1 className='text-center mb-4'>{t('signUpForm.h1')}</h1>
+        <Form className="w-50">
+          <h1 className="text-center mb-4">{t('signUpForm.h1')}</h1>
 
-          <div className='form-floating mb-3'>
+          <div className="form-floating mb-3">
             <Field
-              type='username'
-              name='username'
-              autoComplete='username'
+              type="username"
+              name="username"
+              autoComplete="username"
               required
-              placeholder='От 3 до 20 символов'
-              id='username'
+              placeholder="От 3 до 20 символов"
+              id="username"
               className={`form-control ${(errors.username && touched.username) || isUsernameTaken ? 'is-invalid' : ''}`}
             />
-            <label htmlFor='username'>{t('signUpForm.usernameLabel')}</label>
-            <div placement='right' className='invalid-tooltip'>{isUsernameTaken ? t('errors.authorizationError') : errors.username ? errors.username : ''}
+            <label htmlFor="username">{t('signUpForm.usernameLabel')}</label>
+            <div className="invalid-tooltip">
+              {isUsernameTaken ? t('errors.authorizationError') : errors.username ? errors.username : ''}
             </div>
           </div>
 
-          <div className='form-floating mb-3'>
+          <div className="form-floating mb-3">
             <Field
-              type='password'
-              name='password'
-              autoComplete='new-password'
+              type="password"
+              name="password"
+              autoComplete="new-password"
               required
-              placeholder='Не менее 6 символов'
-              id='password'
+              placeholder="Не менее 6 символов"
+              id="password"
               className={`form-control ${errors.password && touched.password && 'is-invalid'}`}
-              aria-describedby='passwordHelpBlock'
-              aria-autocomplete='list'
+              aria-describedby="passwordHelpBlock"
+              aria-autocomplete="list"
             />
-            <div className='invalid-tooltip'>{errors.password ? errors.password : ''}</div>
-            <label htmlFor='password'>{t('signUpForm.passwordLabel')}</label>
+            <div className="invalid-tooltip">{errors.password ? errors.password : ''}</div>
+            <label htmlFor="password">{t('signUpForm.passwordLabel')}</label>
           </div>
 
-          <div className='form-floating mb-4'>
+          <div className="form-floating mb-4">
             <Field
-              type='password'
-              name='confirmPassword'
-              autoComplete='new-password'
+              type="password"
+              name="confirmPassword"
+              autoComplete="new-password"
               required
-              placeholder='Пароли должны совпадать'
-              id='confirmPassword'
+              placeholder="Пароли должны совпадать"
+              id="confirmPassword"
               className={`form-control ${errors.confirmPassword && touched.confirmPassword && 'is-invalid'}`}
             />
-            <div className='invalid-tooltip'>{errors.confirmPassword ? errors.confirmPassword : ''}</div>
-            <label htmlFor='confirmPassword'>{t('signUpForm.confirmPasswordLabel')}</label>
+            <div className="invalid-tooltip">{errors.confirmPassword ? errors.confirmPassword : ''}</div>
+            <label htmlFor="confirmPassword">{t('signUpForm.confirmPasswordLabel')}</label>
           </div>
 
-          <Button type='submit' variant='outline-primary' className='w-100'>
+          <Button type="submit" variant="outline-primary" className="w-100">
             {t('signUpForm.registrationButton')}
           </Button>
         </Form>

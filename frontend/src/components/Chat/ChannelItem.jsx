@@ -1,6 +1,6 @@
-import { Button, Dropdown, ButtonGroup } from "react-bootstrap"
-import { useTranslation } from "react-i18next"
-import filter from "leo-profanity"
+import { Button, Dropdown, ButtonGroup } from 'react-bootstrap'
+import { useTranslation } from 'react-i18next'
+import filter from 'leo-profanity'
 
 const ChannelItem = ({ channel, currentChannelId, setCurrentChannelId, showModal }) => {
   const { t } = useTranslation()

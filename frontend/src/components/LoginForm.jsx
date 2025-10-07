@@ -15,12 +15,12 @@ const LoginForm = () => {
   const dispatch = useDispatch()
 
   const [authError, setAuthError] = useState(false)
-  
+
   return (
-    <Formik 
-      initialValues={{ username: "", password: "" }}
-      onSubmit={ async (values, { setSubmitting }) => {
-        setSubmitting(true) 
+    <Formik
+      initialValues={{ username: '', password: '' }}
+      onSubmit={async (values, { setSubmitting }) => {
+        setSubmitting(true)
         try {
           const responce = await axios.post(routes.loginPath(), values)
           const userData = responce.data
@@ -37,37 +37,37 @@ const LoginForm = () => {
       }}
     >
       {({ isSubmitting }) => (
-        <Form className='col-12 mt-3 mt-md-0'>
-          <h1 className='text-center mb-4'>{t('loginForm.h1')}</h1>
+        <Form className="col-12 mt-3 mt-md-0">
+          <h1 className="text-center mb-4">{t('loginForm.h1')}</h1>
 
-          <div className='form-floating mb-3'>
+          <div className="form-floating mb-3">
             <Field
               type="username"
               name="username"
               autoComplete="username"
               required
-              placeholder='Ваш ник'
-              id='username'
+              placeholder="Ваш ник"
+              id="username"
               className={`form-control ${authError ? 'is-invalid' : ''}`}
             />
-            <label htmlFor="username">{t('loginForm.usernameLabel')}</label>
+            <label htmlFor="username">{t("loginForm.usernameLabel")}</label>
           </div>
 
-          <div className='form-floating mb-4'>
+          <div className="form-floating mb-4">
             <Field
               type="password"
               name="password"
               autoComplete="current-password"
               required
-              placeholder='Пароль'
+              placeholder="Пароль"
               id="password"
-              className={`form-control ${authError ? 'is-invalid' : ''}`}
+              className={`form-control ${authError ? "is-invalid" : ""}`}
             />
             <label htmlFor="password">{t('loginForm.passwordLabel')}</label>
-            {authError && <div className='invalid-tooltip'>{t('errors.loginError')}</div>}
+            {authError && <div className="invalid-tooltip">{t('errors.loginError')}</div>}
           </div>
 
-          <Button type='submit' variant='outline-primary' className='w-100 mb-3' disabled={isSubmitting}>
+          <Button type="submit" variant="outline-primary" className="w-100 mb-3" disabled={isSubmitting}>
             {t('loginForm.loginButton')}
           </Button>
         </Form>
