@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next'
 
 const ModalForm = ({ initialValues, validationSchema, onSubmit, onHide, isSubmitting }) => {
   const { t } = useTranslation()
-  
+
   const inputRef = useRef()
 
   useEffect(() => {

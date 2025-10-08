@@ -50,7 +50,7 @@ const Add = ({ onHide, setCurrentChannelId }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <ModalForm 
+        <ModalForm
           initialValues={{ name: '' }}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}

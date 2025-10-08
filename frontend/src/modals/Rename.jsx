@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 import * as Yup from 'yup'
 import axios from 'axios'
-import { useFormik } from 'formik'
-import { Button, Modal, Form } from 'react-bootstrap'
+import { Modal } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
-
 import routes from '../routes'
 import ModalForm from './ModalForm'
 
@@ -50,7 +48,7 @@ const Rename = ({ modalInfo, onHide }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <ModalForm 
+        <ModalForm
           initialValues={modalInfo.item}
           validationSchema={validationSchema}
           onSubmit={handleSubmit}
