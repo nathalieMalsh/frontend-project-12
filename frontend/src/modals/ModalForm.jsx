@@ -1,9 +1,11 @@
 import { useEffect, useRef } from 'react'
+import { useSelector } from 'react-redux'
+import * as Yup from 'yup'
 import { useFormik } from 'formik'
 import { Button, Form } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 
-const ModalForm = ({ initialValues, validationSchema, onSubmit, onHide, isSubmitting }) => {
+const ModalForm = ({ initialValues, onSubmit, onHide, isSubmitting }) => {
   const { t } = useTranslation()
 
   const inputRef = useRef()
@@ -11,6 +13,17 @@ const ModalForm = ({ initialValues, validationSchema, onSubmit, onHide, isSubmit
   useEffect(() => {
     inputRef.current.focus()
   }, [])
+
+  const channelsNames = useSelector(state => state.channels.channels).map(channel => channel.name)
+
+  const validationSchema = Yup.object().shape({
+    name: Yup.string()
+      .trim()
+      .required(t('errors.required'))
+      .min(3, t('errors.symbolsLength'))
+      .max(20, t('errors.symbolsLength'))
+      .notOneOf(channelsNames, t('errors.mustBeUnique')),
+  })
 
   const formik = useFormik({
     initialValues,

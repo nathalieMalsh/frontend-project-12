@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import * as Yup from 'yup'
 import axios from 'axios'
 import { Modal } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
@@ -13,19 +12,8 @@ const Add = ({ onHide, setCurrentChannelId }) => {
 
   const [isSubmitting, setSubmitting] = useState(false)
 
-  const channelsNames = useSelector(state => state.channels.channels).map(channel => channel.name)
-
   const { userId } = useSelector(state => state.auth)
   const token = userId?.token
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .trim()
-      .required(t('errors.required'))
-      .min(3, t('errors.symbolsLength'))
-      .max(20, t('errors.symbolsLength'))
-      .notOneOf(channelsNames, t('errors.mustBeUnique')),
-  })
 
   const handleSubmit = async ({ name }) => {
     setSubmitting(true)
@@ -52,7 +40,6 @@ const Add = ({ onHide, setCurrentChannelId }) => {
       <Modal.Body>
         <ModalForm
           initialValues={{ name: '' }}
-          validationSchema={validationSchema}
           onSubmit={handleSubmit}
           onHide={onHide}
           isSubmitting={isSubmitting}
