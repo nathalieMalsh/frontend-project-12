@@ -8,14 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import routes from '../routes'
+import ModalForm from './ModalForm'
 
 const Rename = ({ modalInfo, onHide }) => {
   const { t } = useTranslation()
-
-  const inputRef = useRef()
-  useEffect(() => {
-    inputRef.current.focus()
-  }, [])
 
   const [isSubmitting, setSubmitting] = useState(false)
 
@@ -33,10 +29,10 @@ const Rename = ({ modalInfo, onHide }) => {
       .notOneOf(channelsNames, t('errors.mustBeUnique')),
   })
 
-  const editChannel = async (newName, id) => {
+  const handleSubmit = async ({ name }) => {
     setSubmitting(true)
     try {
-      axios.patch(`${routes.channelsPath()}/${id}`, { name: newName }, { headers: { Authorization: `Bearer ${token}` } })
+      axios.patch(`${routes.channelsPath()}/${modalInfo.item.id}`, { name }, { headers: { Authorization: `Bearer ${token}` } })
       toast.success(t('toast.renameChannel'))
     }
     catch (error) {
@@ -44,19 +40,8 @@ const Rename = ({ modalInfo, onHide }) => {
       toast.error(t('errors.toastRenameChannel'))
     }
     setSubmitting(false)
+    onHide()
   }
-
-  const formik = useFormik({
-    initialValues: modalInfo.item,
-    validationSchema,
-    validateOnChange: false,
-    onSubmit: (values) => {
-      const newName = values.name
-      const { id } = modalInfo.item
-      editChannel(newName, id)
-      onHide()
-    },
-  })
 
   return (
     <Modal show centered>
@@ -65,25 +50,13 @@ const Rename = ({ modalInfo, onHide }) => {
       </Modal.Header>
 
       <Modal.Body>
-        <Form onSubmit={formik.handleSubmit}>
-          <Form.Group>
-            <Form.Control
-              ref={inputRef}
-              className={`mb-2 form-control ${formik.errors.name ? 'is-invalid' : ''}`}
-              name="name"
-              id="name"
-              value={formik.values.name}
-              onChange={formik.handleChange}
-              required
-            />
-            <Form.Label className="visually-hidden" htmlFor="name">{t('modals.channelName')}</Form.Label>
-            <div className="invalid-feedback">{formik.errors.name && formik.touched.name ? formik.errors.name : ''}</div>
-            <div className="d-flex justify-content-end">
-              <Button type="button" variant="secondary" className="me-2" onClick={() => onHide()}>{t('modals.cancelButton')}</Button>
-              <Button type="submit" variant="primary" disabled={isSubmitting}>{t('modals.sendButton')}</Button>
-            </div>
-          </Form.Group>
-        </Form>
+        <ModalForm 
+          initialValues={modalInfo.item}
+          validationSchema={validationSchema}
+          onSubmit={handleSubmit}
+          onHide={onHide}
+          isSubmitting={isSubmitting}
+        />
       </Modal.Body>
     </Modal>
   )
