@@ -16,25 +16,27 @@ const LoginForm = () => {
 
   const [authError, setAuthError] = useState(false)
 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true)
+    try {
+      const responce = await axios.post(routes.loginPath(), values)
+      const userData = responce.data
+      dispatch(loginSuccess(userData))
+      setAuthError(false)
+      navigate('/')
+    }
+    catch (error) {
+      console.log(error.message)
+      setAuthError(true)
+    }
+
+    setSubmitting(false)
+  }
+
   return (
     <Formik
       initialValues={{ username: '', password: '' }}
-      onSubmit={async (values, { setSubmitting }) => {
-        setSubmitting(true)
-        try {
-          const responce = await axios.post(routes.loginPath(), values)
-          const userData = responce.data
-          dispatch(loginSuccess(userData))
-          setAuthError(false)
-          navigate('/')
-        }
-        catch (error) {
-          console.log(error.message)
-          setAuthError(true)
-        }
-
-        setSubmitting(false)
-      }}
+      onSubmit={handleSubmit}
     >
       {({ isSubmitting }) => (
         <Form className="col-12 mt-3 mt-md-0">
