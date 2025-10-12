@@ -1,12 +1,5 @@
 install: # чистая установка зависимостей (устанавливает зависимости строго по package-lock.json)
-	npm ci
-
-link: # генерация ссылки для проекта
-	npm link
-
-# перед этим использовать make link (npm link)
-publish: #отладка публикации проекта
-	npm publish --dry-run
+	npm ci && cd frontend && npm ci
 
 build: # сборка проекта в папку ./frontend/dist
 	npm ci && cd frontend && npm ci && npm run build
