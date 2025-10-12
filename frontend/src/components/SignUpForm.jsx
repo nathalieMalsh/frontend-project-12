@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux'
 import { Button } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import routes from '../routes'
-import { signUp } from '../slices/authSlice'
+import { signUp } from '../store/slices/authSlice.jsx'
 
 const SignUpForm = () => {
   const { t } = useTranslation()

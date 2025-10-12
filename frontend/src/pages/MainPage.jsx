@@ -6,7 +6,7 @@ import { Container, Row } from 'react-bootstrap'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 import routes from '../routes'
-import { loadChannels } from '../slices/channelsSlice.jsx'
+import { loadChannels } from '../store/slices/channelsSlice.jsx'
 import Chat from '../components/Chat/Chat.jsx'
 import Header from '../components/Header.jsx'
 

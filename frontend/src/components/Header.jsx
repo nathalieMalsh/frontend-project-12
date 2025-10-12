@@ -2,7 +2,7 @@ import { Container, Navbar } from 'react-bootstrap'
 import { Button } from 'react-bootstrap'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { logOut } from '../slices/authSlice'
+import { logOut } from '../store/slices/authSlice.jsx'
 
 const Header = () => {
   const { t } = useTranslation()
