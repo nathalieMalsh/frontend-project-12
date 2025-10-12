@@ -19,28 +19,30 @@ const SignUpForm = () => {
 
   const validationSchema = getSignUpSchema(t)
 
+  const handleSubmit = async (values, { setSubmitting }) => {
+    setSubmitting(true)
+    const { username, password } = values
+    try {
+      const responce = await axios.post(routes.signupPath(), { username, password })
+      setUsernameTaken(false)
+      dispatch(signUp(responce.data))
+      navigate('/')
+    }
+    catch (error) {
+      if (error.status === 409) {
+        setUsernameTaken(true)
+      }
+      console.log(error.message)
+    }
+
+    setSubmitting(false)
+  }
+
   return (
     <Formik
       initialValues={{ username: '', password: '', confirmPassword: '' }}
       validationSchema={validationSchema}
-      onSubmit={async (values, { setSubmitting }) => {
-        setSubmitting(true)
-        const { username, password } = values
-        try {
-          const responce = await axios.post(routes.signupPath(), { username, password })
-          setUsernameTaken(false)
-          dispatch(signUp(responce.data))
-          navigate('/')
-        }
-        catch (error) {
-          if (error.status === 409) {
-            setUsernameTaken(true)
-          }
-          console.log(error.message)
-        }
-
-        setSubmitting(false)
-      }}
+      onSubmit={handleSubmit}
     >
       {({ errors, touched }) => (
         <Form className="w-50">

@@ -1,6 +1,6 @@
 import * as Yup from 'yup'
 
-const getSignUpSchema = (t) => Yup.object().shape({
+const getSignUpSchema = t => Yup.object().shape({
   username: Yup.string()
     .trim()
     .required(t('errors.required'))
