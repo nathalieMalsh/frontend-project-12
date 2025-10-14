@@ -29,7 +29,7 @@ const Messages = ({ channels, currentChannelId, currentChannelChat, inputValue, 
               {`: ${filter.clean(body)}`}
             </div>
           ))}
-          <div ref={autoScrollRef}/>
+          <div ref={autoScrollRef} />
         </div>
 
         <div className="mt-auto px-5 py-3">
