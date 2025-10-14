@@ -46,7 +46,6 @@ const LoginForm = () => {
             <Field
               type="username"
               name="username"
-              autoComplete="username"
               required
               placeholder="Ваш ник"
               id="username"
@@ -59,7 +58,6 @@ const LoginForm = () => {
             <Field
               type="password"
               name="password"
-              autoComplete="current-password"
               required
               placeholder="Пароль"
               id="password"

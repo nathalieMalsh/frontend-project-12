@@ -6,5 +6,3 @@ build: # сборка проекта в папку ./frontend/dist
 
 start: # запуск сервера
 	npx start-server -s ./frontend/dist
-
-

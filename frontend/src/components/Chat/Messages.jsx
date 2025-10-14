@@ -1,9 +1,17 @@
 import { Col, Button, Form } from 'react-bootstrap'
+import { useEffect, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import filter from 'leo-profanity'
 
 const Messages = ({ channels, currentChannelId, currentChannelChat, inputValue, handleChange, handleSubmit }) => {
   const { t } = useTranslation()
+
+  const autoScrollRef = useRef()
+
+  useEffect(() => {
+    autoScrollRef.current.scrollIntoView()
+  }, [currentChannelChat])
+
   return (
     <Col className="p-0 h-100">
       <div className="d-flex flex-column h-100">
@@ -21,6 +29,7 @@ const Messages = ({ channels, currentChannelId, currentChannelChat, inputValue, 
               {`: ${filter.clean(body)}`}
             </div>
           ))}
+          <div ref={autoScrollRef}/>
         </div>
 
         <div className="mt-auto px-5 py-3">

@@ -52,7 +52,6 @@ const SignUpForm = () => {
             <Field
               type="username"
               name="username"
-              autoComplete="username"
               required
               placeholder="От 3 до 20 символов"
               id="username"
@@ -68,13 +67,11 @@ const SignUpForm = () => {
             <Field
               type="password"
               name="password"
-              autoComplete="new-password"
               required
               placeholder="Не менее 6 символов"
               id="password"
               className={`form-control ${errors.password && touched.password && 'is-invalid'}`}
               aria-describedby="passwordHelpBlock"
-              aria-autocomplete="list"
             />
             <div className="invalid-tooltip">{errors.password ? errors.password : ''}</div>
             <label htmlFor="password">{t('signUpForm.passwordLabel')}</label>
@@ -84,7 +81,6 @@ const SignUpForm = () => {
             <Field
               type="password"
               name="confirmPassword"
-              autoComplete="new-password"
               required
               placeholder="Пароли должны совпадать"
               id="confirmPassword"

@@ -71,6 +71,9 @@ export default {
       },
       notFoundPage: {
         h1: '404 - Страница не найдена',
+        altText: 'Страница не найдена',
+        p: 'Но вы можете перейти ',
+        a: 'на главную страницу',
       },
       header: {
         navbarBrand: 'Hexlet Chat',
